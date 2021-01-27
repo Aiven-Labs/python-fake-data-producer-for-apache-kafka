@@ -7,7 +7,6 @@ An Apache Kafka fake data producer with Python and Faker. For more info about th
 ```
 pip install faker
 pip install kafka-python
-
 ```
 
 ## Usage
@@ -15,7 +14,11 @@ pip install kafka-python
 The Python code can be run in bash with the following
 
 ```
-python main.py --cert-folder ~/Documents/kafkaCerts/kafka-test/ --host kafka-2e15adc9-dev-advocates.aivencloud.com --port 13041 --nr-messages 0 --max_waiting_time 0
+python main.py --cert-folder ~/Documents/kafkaCerts/kafka-test/ \
+  --host kafka-2e15adc9-dev-advocates.aivencloud.com \
+  --port 13041 \
+  --nr-messages 0 \
+  --max_waiting_time 0
 ```
 Where
 * `cert-folder`: points to the folder containing the Kafka certificates (see [blog post]() for more)
