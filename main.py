@@ -72,8 +72,12 @@ print()
 
 
 # function produce_msgs starts producing messages with Faker
-def produce_msgs(cert_folder="~/kafka-pizza/", hostname='hostname',
-                 port='1234', nr_messages=-1, max_waiting_time_in_sec=5):
+def produce_msgs(cert_folder="~/kafka-pizza/",
+                 hostname='hostname',
+                 port='1234',
+                 topic_name='pizza-orders',
+                 nr_messages=-1,
+                 max_waiting_time_in_sec=5):
     producer = KafkaProducer(
         bootstrap_servers=hostname+":"+port,
         security_protocol="SSL",
@@ -112,7 +116,7 @@ def produce_msgs(cert_folder="~/kafka-pizza/", hostname='hostname',
 
         print("Sending: {}".format(message))
         # sending the message to Kafka
-        producer.send("pizza-orders",
+        producer.send(topic_name,
                       key={'shop': key},
                       value=message)
         # Sleeping time
@@ -135,15 +139,18 @@ def main():
     parser.add_argument('--cert-folder', help="Path to folder containing required Kafka certificates", required=True)
     parser.add_argument('--host', help="Kafka Host (obtained from Aiven console)", required=True)
     parser.add_argument('--port', help="Kafka Port (obtained from Aiven console)", required=True)
+    parser.add_argument('--topic-name', help="Topic Name", required=True)
     parser.add_argument('--nr-messages', help="Number of messages to produce (0 for unlimited)", required=True)
-    parser.add_argument('--max_waiting_time', help="Max waiting time between messages (0 for none)", required=True)
+    parser.add_argument('--max-waiting-time', help="Max waiting time between messages (0 for none)", required=True)
     args = parser.parse_args()
     p_cert_folder =args.cert_folder
     p_hostname =args.host
     p_port =args.port
+    p_topic_name=args.topic_name
     produce_msgs(cert_folder=p_cert_folder,
                  hostname=p_hostname,
                  port=p_port,
+                 topic_name=p_topic_name,
                  nr_messages=int(args.nr_messages),
                  max_waiting_time_in_sec=int(args.max_waiting_time)
                  )
