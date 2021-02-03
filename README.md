@@ -2,14 +2,13 @@
 
 ## Description
 
-**Kafka Python Fake Data Producer** is a complete demo app allowing you to quickly produce a fake Pizza-based streaming dataset and push it to an Apache Kafka topic. 
+**Kafka Python Fake Data Producer** is a complete demo app allowing you to quickly produce a fake Pizza-based streaming dataset and push it to an Apache Kafka topic.
 
 * **Apache Kafka**: a [distributed streaming platform](https://kafka.apache.org/)
 * **Topic**: all Kafka records are organised into topics, you can think of a topic like an event log.
 * **Kafka Producer**: an entity/application that publishes data to Kafka
 
-An Apache Kafka cluster can be [installed locally](https://kafka.apache.org/quickstart) or created in minutes using [Aiven.io console](https://console.aiven.io).
-
+An Apache Kafka cluster can be [installed locally](https://kafka.apache.org/quickstart) or created in minutes using [Aiven.io console](https://console.aiven.io/signup?utm_source=github&utm_medium=organic&utm_campaign=blog_art&utm_content=post).
 
 For more informations about the code building blogs check the [blog post](blogs.aiven.io)
 
@@ -40,6 +39,37 @@ Where
 * `topic-name`: the Kafka topic name to write to (the topic needs to be pre-created or `kafka.auto_create_topics_enable` parameter enabled)
 * `nr-messages`: the number of messages to send
 * `max-waiting-time`: the maximum waiting time in seconds between messages
+
+# Starting your Kafka Service with Aiven.io
+
+Once created your account you can start your Kafka service with [Aiven.io's cli](https://github.com/aiven/aiven-client)
+
+```
+avn service create  \
+  -t kafka <KAFKA_INSTANCE_NAME> \
+  -p <AIVEN_PLAN_NAME> \
+  --cloud  <CLOUD_PROVIDER> \
+  --project <PROJECT_NAME> \
+  -c kafka_rest=true \
+  -c kafka.auto_create_topics_enable=true \
+  -c schema_registry=true
+```
+
+Download the required certificates with
+```
+avn service user-creds-download <KAFKA_SERVICE_NAME> \
+  --project <PROJECT_NAME>    \
+  -d <DESTINATION_FOLDER_NAME> \
+  --username avnadmin
+```
+And Kafka Service URI with
+
+```
+avn service get <KAFKA_SERVICE_NAME> \
+  --project <PROJECT_NAME> \
+  --format '{service_uri}'
+```
+For a more detailed description of services and required credentials, check the [blog post](blogs.aiven.io)
 
 ## No Pizza? No Problem!
 
