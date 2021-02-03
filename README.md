@@ -1,4 +1,4 @@
-# Kafka Python Fake DataP Producer
+# Kafka Python Fake Data Producer
 
 ## Description
 
