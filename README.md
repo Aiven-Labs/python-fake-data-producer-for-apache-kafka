@@ -5,7 +5,7 @@
 **Kafka Python Fake Data Producer** is a complete demo app allowing you to quickly produce a fake Pizza-based streaming dataset and push it to an Apache Kafka topic.
 
 * **Apache Kafka**: a [distributed streaming platform](https://kafka.apache.org/)
-* **Topic**: all Kafka records are organised into topics, you can think of a topic like an event log.
+* **Topic**: all Kafka records are organised into topics, you can think of a topic like an event log or a table if you're familiar with databases.
 * **Kafka Producer**: an entity/application that publishes data to Kafka
 
 An Apache Kafka cluster can be [installed locally](https://kafka.apache.org/quickstart) or created in minutes using [Aiven.io console](https://console.aiven.io/signup?utm_source=github&utm_medium=organic&utm_campaign=blog_art&utm_content=post).
