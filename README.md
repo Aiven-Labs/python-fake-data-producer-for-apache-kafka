@@ -8,7 +8,7 @@
 * **Topic**: all Kafka records are organised into topics, you can think of a topic like an event log or a table if you're familiar with databases.
 * **Kafka Producer**: an entity/application that publishes data to Kafka
 
-An Apache Kafka cluster can be [installed locally](https://kafka.apache.org/quickstart) or created in minutes using [Aiven.io console](https://console.aiven.io/signup?utm_source=github&utm_medium=organic&utm_campaign=blog_art&utm_content=post).
+An Apache Kafka cluster can be [installed locally](https://kafka.apache.org/quickstart) or created in minutes in any cloud of your choice using [Aiven.io console](https://console.aiven.io/signup?utm_source=github&utm_medium=organic&utm_campaign=blog_art&utm_content=post).
 
 For more informations about the code building blogs check the [blog post](blogs.aiven.io)
 
