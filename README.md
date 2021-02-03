@@ -2,7 +2,7 @@
 
 ## Description
 
-**Kafka Python Fake Data Producer** is a complete demo app allowing you to quickly produce a fake Pizza-based streaming dataset and push it to an Apache Kafka topic.
+**Kafka Python Fake Data Producer** is a complete demo app allowing you to quickly produce a Python fake Pizza-based streaming dataset and push it to an Apache Kafka topic. It gives an example on how easy is to create great fake streaming data to feed Apache Kafka.
 
 * **Apache Kafka**: a [distributed streaming platform](https://kafka.apache.org/)
 * **Topic**: all Kafka records are organised into topics, you can think of a topic like an event log or a table if you're familiar with databases.
@@ -14,6 +14,8 @@ For more informations about the code building blogs check the [blog post](blogs.
 
 
 ## Installation
+This demo app is relying on [Faker](Python 3.5 and above) and [kafka-python](https://kafka-python.readthedocs.io/en/master/usage.html) which the former requiring Python 3.5 and above.
+The installation can be done via
 
 ```
 pip install faker
@@ -25,7 +27,7 @@ pip install kafka-python
 The Python code can be run in bash with the following
 
 ```
-python main.py --cert-folder ~/Documents/kafkaCerts/kafka-test/ \
+python main.py --cert-folder ~/kafkaCerts/ \
   --host kafka-<name>.aivencloud.com \
   --port 13041 \
   --topic-name pizza-orders \
