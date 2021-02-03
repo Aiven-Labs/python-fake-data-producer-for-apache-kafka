@@ -1,4 +1,5 @@
 # kafka-python-fake-data-producer
+
 An Apache Kafka fake data producer with Python and Faker. For more info about the setup check the [blog post]()
 
 

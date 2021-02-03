@@ -4,7 +4,7 @@ from kafka import KafkaProducer
 import time
 import random
 import argparse
-from faker.providers import BaseProvider
+from pizzaproducer import PizzaProvider
 
 MAX_NUMBER_PIZZAS_IN_ORDER = 10
 MAX_ADDITIONAL_TOPPINGS_IN_PIZZA = 5
@@ -15,60 +15,36 @@ MAX_ADDITIONAL_TOPPINGS_IN_PIZZA = 5
 fake = Faker()
 Faker.seed(4321)
 
-# Adding a PizzaProvider with 3 methods:
-#   * pizza_name to retrieve the name of the basic pizza,
-#   * pizza_topping for additional toppings
-#   * pizza_shop to retrieve one of the shops available
-
-class PizzaProvider(BaseProvider):
-    def pizza_name(self):
-        valid_pizza_names = [
-            'Margherita',
-            'Marinara',
-            'Diavola',
-            'Mari & Monti',
-            'Salami',
-            'Peperoni'
-        ]
-        return valid_pizza_names[random.randint(0, len(valid_pizza_names)-1)]
-
-    def pizza_topping(self):
-        available_pizza_toppings = [
-            'tomato',
-            'mozzarella',
-            'blue cheese',
-            'salami',
-            'green peppers',
-            'ham',
-            'olives',
-            'anchovies',
-            'artichokes',
-            'olives',
-            'garlic',
-            'tuna',
-            'onion',
-            'pineapple',
-            'strawberry',
-            'banana'
-        ]
-        return available_pizza_toppings[random.randint(0, len(available_pizza_toppings)-1)]
-
-    def pizza_shop(self):
-        pizza_shops = [
-            'Marios Pizza',
-            'Luigis Pizza',
-            'Circular Pi Pizzeria',
-            'Ill Make You a Pizza You Can''t Refuse',
-            'Mammamia Pizza',
-            'Its-a me! Mario Pizza!'
-        ]
-        return pizza_shops[random.randint(0, len(pizza_shops)-1)]
 
 
 # Adding the newly created PizzaProvider to the Faker instance
 fake.add_provider(PizzaProvider)
-print()
-# Setting the Kafka Producer
+
+# creating function to generate the pizza Order
+def produce_pizza_order (ordercount = 1):
+    shop = fake.pizza_shop()
+    # Each Order can have 1-10 pizzas in it
+    pizzas = []
+    for pizza in range(random.randint(1, MAX_NUMBER_PIZZAS_IN_ORDER)):
+        # Each Pizza can have 0-5 additional toppings on it
+        toppings = []
+        for topping in range(random.randint(0, MAX_ADDITIONAL_TOPPINGS_IN_PIZZA)):
+            toppings.append(fake.pizza_topping())
+        pizzas.append({
+            'pizzaName': fake.pizza_name(),
+            'additionalToppings': toppings
+        })
+    # message composition
+    message = {
+        'id': ordercount,
+        'shop': shop,
+        'name': fake.unique.name(),
+        'phoneNumber': fake.unique.phone_number(),
+        'address': fake.address(),
+        'pizzas': pizzas
+    }
+    key = {'shop': shop}
+    return message, key
 
 
 # function produce_msgs starts producing messages with Faker
@@ -91,33 +67,12 @@ def produce_msgs(cert_folder="~/kafka-pizza/",
         nr_messages = float('inf')
     i = 0
     while i < nr_messages:
-        # Setting the Key as the shop name
-        key = fake.pizza_shop()
-        # Each Order can have 1-10 pizzas in it
-        pizzas = []
-        for pizza in range(random.randint(1, MAX_NUMBER_PIZZAS_IN_ORDER)):
-            # Each Pizza can have 0-5 additional toppings on it
-            toppings = []
-            for topping in range(random.randint(0, MAX_ADDITIONAL_TOPPINGS_IN_PIZZA)):
-                toppings.append(fake.pizza_topping())
-            pizzas.append({
-                'pizzaName': fake.pizza_name(),
-                'additionalToppings': toppings
-            })
-        # message composition
-        message = {
-            'id': i,
-            'shop': key,
-            'name': fake.unique.name(),
-            'phoneNumber': fake.unique.phone_number(),
-            'address': fake.address(),
-            'pizzas': pizzas
-        }
+        message, key = produce_pizza_order(i)
 
         print("Sending: {}".format(message))
         # sending the message to Kafka
         producer.send(topic_name,
-                      key={'shop': key},
+                      key=key,
                       value=message)
         # Sleeping time
         sleep_time = random.randint(0, max_waiting_time_in_sec * 10)/10
