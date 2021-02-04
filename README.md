@@ -17,7 +17,7 @@ For more informations about the code building blogs check the [blog post](blogs.
 This demo app is relying on [Faker](Python 3.5 and above) and [kafka-python](https://kafka-python.readthedocs.io/en/master/usage.html) which the former requiring Python 3.5 and above.
 The installation can be done via
 
-```
+```bash
 pip install faker
 pip install kafka-python
 ```
@@ -26,7 +26,7 @@ pip install kafka-python
 
 The Python code can be run in bash with the following
 
-```
+```bash
 python main.py --cert-folder ~/kafkaCerts/ \
   --host kafka-<name>.aivencloud.com \
   --port 13041 \
@@ -45,21 +45,21 @@ Where
 If successfully connected to a Kafka cluster, the command will output a number of messages (`nr-messages` parameter) that are been sent to Kafka in the form
 
 ```json
-Sending: {
-  'id': 0,
-  'shop': 'Circular Pi Pizzeria',
-  'name': 'Jason Brown',
-  'phoneNumber': '(510)290-7469',
-  'address': '2701 Samuel Summit Suite 938\nRyanbury, PA 62847',
-  'pizzas': [{
-    'pizzaName': 'Diavola',
-    'additionalToppings': []
+{
+  "id": 0,
+  "shop": "Circular Pi Pizzeria",
+  "name": "Jason Brown",
+  "phoneNumber": "(510)290-7469",
+  "address": "2701 Samuel Summit Suite 938\nRyanbury, PA 62847",
+  "pizzas": [{
+    "pizzaName": "Diavola",
+    "additionalToppings": []
   }, {
-    'pizzaName': 'Mari & Monti',
-    'additionalToppings': ['olives', 'garlic', 'anchovies']
+    "pizzaName": "Mari & Monti",
+    "additionalToppings": ["olives", "garlic", "anchovies"]
   }, {
-    'pizzaName': 'Diavola',
-    'additionalToppings': ['onion', 'anchovies', 'mozzarella', 'olives']
+    "pizzaName": "Diavola",
+    "additionalToppings": ["onion", "anchovies", "mozzarella", "olives"]
   }]
 }
 ```
@@ -80,7 +80,7 @@ If you don't have a Kafka Cluster available, you can easily start one in [Aiven.
 
 Once created your account you can start your Kafka service with [Aiven.io's cli](https://github.com/aiven/aiven-client)
 
-```
+```bash
 avn service create  \
   -t kafka <KAFKA_INSTANCE_NAME> \
   --project <PROJECT_NAME> \
@@ -94,16 +94,16 @@ With Parameters:
 * `<KAFKA_INSTANCE_NAME>`: the name you want to give to the Kafka instance
 * `<PROJECT_NAME>`: the name of the project created during sing-up
 * `<CLOUD_PROVIDER>`: the name of the Cloud region where the instance will be created. The list of cloud regions can be found with
-```
+```bash
 avn cloud list
 ```
 * `<AIVEN_PLAN_NAME>`: name of Aiven's plan to use, which will drive the resources available, the list of plans can be found with
-```
+```bash
 avn service plans --project <PROJECT_NAME> -t kafka --cloud <CLOUD_PROVIDER>
 ```
 
 Download the required certificates with
-```
+```bash
 avn service user-creds-download <KAFKA_SERVICE_NAME> \
   --project <PROJECT_NAME>    \
   -d <DESTINATION_FOLDER_NAME> \
@@ -111,7 +111,7 @@ avn service user-creds-download <KAFKA_SERVICE_NAME> \
 ```
 And Kafka Service URI with
 
-```
+```bash
 avn service get <KAFKA_SERVICE_NAME> \
   --project <PROJECT_NAME> \
   --format '{service_uri}'
@@ -126,7 +126,7 @@ The code is based on [Faker](https://faker.readthedocs.io/en/master/), an Open S
 
 To modify the data generated, change the `produce_pizza_order` function within the `main.py` file. The output of the function should be two python dictionaries, containing the event `key` and `message`
 
-```
+```python
 def produce_pizza_order (ordercount = 1):
     message = {
         'name': fake.unique.name(),
