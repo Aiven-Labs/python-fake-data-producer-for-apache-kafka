@@ -114,6 +114,7 @@ avn service create  \
   -c kafka.auto_create_topics_enable=true \
   -c schema_registry=true
 ```
+
 ---
 
 You can download the required SSL certificates in the `<DESTINATION_FOLDER_NAME>` with
