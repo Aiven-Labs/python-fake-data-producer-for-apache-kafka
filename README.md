@@ -80,43 +80,65 @@ If you don't have a Kafka Cluster available, you can easily start one in [Aiven.
 
 Once created your account you can start your Kafka service with [Aiven.io's cli](https://github.com/aiven/aiven-client)
 
+Set your variables first:
+```bash
+KAFKA_INSTANCE_NAME=fafka-my
+PROJECT_NAME=my-project
+CLOUD_REGION=aws-eu-south-1
+AIVEN_PLAN_NAME=business-4
+DESTINATION_FOLDER_NAME=~/kafkacerts
+```
+Parameters:
+* `KAFKA_INSTANCE_NAME`: the name you want to give to the Kafka instance
+* `PROJECT_NAME`: the name of the project created during sing-up
+* `CLOUD_REGION`: the name of the Cloud region where the instance will be created. The list of cloud regions can be found
+ with
+```bash
+avn cloud list
+```
+* `AIVEN_PLAN_NAME`: name of Aiven's plan to use, which will drive the resources available, the list of plans can be found with
+```bash
+avn service plans --project <PROJECT_NAME> -t kafka --cloud <CLOUD_PROVIDER>
+```
+* `DESTINATION_FOLDER_NAME`: local folder where Kafka certificates will be stored (used to login)
+
+You can create the Kafka service with
+
 ```bash
 avn service create  \
-  -t kafka <KAFKA_INSTANCE_NAME> \
-  --project <PROJECT_NAME> \
-  --cloud  <CLOUD_PROVIDER> \
-  -p <AIVEN_PLAN_NAME> \
+  -t kafka $KAFKA_INSTANCE_NAME \
+  --project $PROJECT_NAME \
+  --cloud  $CLOUD_PROVIDER \
+  -p $AIVEN_PLAN_NAME \
   -c kafka_rest=true \
   -c kafka.auto_create_topics_enable=true \
   -c schema_registry=true
 ```
-With Parameters:
-* `<KAFKA_INSTANCE_NAME>`: the name you want to give to the Kafka instance
-* `<PROJECT_NAME>`: the name of the project created during sing-up
-* `<CLOUD_PROVIDER>`: the name of the Cloud region where the instance will be created. The list of cloud regions can be found with
-```bash
-avn cloud list
-```
-* `<AIVEN_PLAN_NAME>`: name of Aiven's plan to use, which will drive the resources available, the list of plans can be found with
-```bash
-avn service plans --project <PROJECT_NAME> -t kafka --cloud <CLOUD_PROVIDER>
-```
 
-Download the required certificates with
+You can download the required SSL certificates in the `<DESTINATION_FOLDER_NAME>` with
+
 ```bash
-avn service user-creds-download <KAFKA_SERVICE_NAME> \
-  --project <PROJECT_NAME>    \
-  -d <DESTINATION_FOLDER_NAME> \
+avn service user-creds-download $KAFKA_SERVICE_NAME \
+  --project $PROJECT_NAME    \
+  -d $DESTINATION_FOLDER_NAME \
   --username avnadmin
 ```
-And Kafka Service URI with
+
+And retrieve the Kafka Service URI with
 
 ```bash
-avn service get <KAFKA_SERVICE_NAME> \
-  --project <PROJECT_NAME> \
+avn service get $KAFKA_SERVICE_NAME \
+  --project $PROJECT_NAME \
   --format '{service_uri}'
 ```
-The Kafka Service URI provides the `hostname` and `port` needed to execute the code.
+
+The Kafka Service URI is in the form `hostname:port` and provides the `hostname` and `port` needed to execute the code.
+You can wait for the newly created Kafka instance to be ready with
+
+```bash
+avn service wait $KAFKA_SERVICE_NAME --project $PROJECT_NAME
+```
+
 For a more detailed description of services and required credentials, check the [blog post](blogs.aiven.io)
 
 ## No Pizza? No Problem!
