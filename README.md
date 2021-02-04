@@ -42,6 +42,38 @@ Where
 * `nr-messages`: the number of messages to send
 * `max-waiting-time`: the maximum waiting time in seconds between messages
 
+If successfully connected to a Kafka cluster, the command will output a number of messages (`nr-messages` parameter) that are been sent to Kafka in the form
+
+```
+Sending: {
+  'id': 0,
+  'shop': 'Circular Pi Pizzeria',
+  'name': 'Jason Brown',
+  'phoneNumber': '(510)290-7469',
+  'address': '2701 Samuel Summit Suite 938\nRyanbury, PA 62847',
+  'pizzas': [{
+    'pizzaName': 'Diavola',
+    'additionalToppings': []
+  }, {
+    'pizzaName': 'Mari & Monti',
+    'additionalToppings': ['olives', 'garlic', 'anchovies']
+  }, {
+    'pizzaName': 'Diavola',
+    'additionalToppings': ['onion', 'anchovies', 'mozzarella', 'olives']
+  }]
+}
+```
+
+With
+* `id`: being the order number, starting from `0` until `nr-messages -1`
+* `shop`: is the pizza shop name receiving the order, you can check and change the full list of shops in the `pizza_shop` function within [pizzaproducer.py](pizzaproducer.py)
+* `name`: the caller name
+* `phoneNumber`: the caller phone number
+* `address`: the caller address
+* `pizzas`: an array or pizza orders made by
+  * `pizzaName`: the name of the basic pizza in the range from 1 to `MAX_NUMBER_PIZZAS_IN_ORDER` defined in [main.py](main.py), the list of available pizzas can be found in the `pizza_name` function within [pizzaproducer.py](pizzaproducer.py)
+  * `additionalToppings`: an optional number of additional toppings added to the pizza in the range from 0 to `MAX_ADDITIONAL_TOPPINGS_IN_PIZZA` , the list of available toppings can be found in the `pizza_topping` function within [pizzaproducer.py](pizzaproducer.py)
+
 # Starting your Kafka Service with Aiven.io
 
 Once created your account you can start your Kafka service with [Aiven.io's cli](https://github.com/aiven/aiven-client)
