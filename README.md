@@ -44,7 +44,7 @@ Where
 
 If successfully connected to a Kafka cluster, the command will output a number of messages (`nr-messages` parameter) that are been sent to Kafka in the form
 
-```
+```json
 Sending: {
   'id': 0,
   'shop': 'Circular Pi Pizzeria',
