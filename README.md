@@ -76,17 +76,30 @@ With
 
 # Starting your Kafka Service with Aiven.io
 
+If you don't have a Kafka Cluster available, you can easily start one in [Aiven.io console](https://console.aiven.io/signup?utm_source=github&utm_medium=organic&utm_campaign=blog_art&utm_content=post).
+
 Once created your account you can start your Kafka service with [Aiven.io's cli](https://github.com/aiven/aiven-client)
 
 ```
 avn service create  \
   -t kafka <KAFKA_INSTANCE_NAME> \
-  -p <AIVEN_PLAN_NAME> \
-  --cloud  <CLOUD_PROVIDER> \
   --project <PROJECT_NAME> \
+  --cloud  <CLOUD_PROVIDER> \
+  -p <AIVEN_PLAN_NAME> \
   -c kafka_rest=true \
   -c kafka.auto_create_topics_enable=true \
   -c schema_registry=true
+```
+With Parameters:
+* `<KAFKA_INSTANCE_NAME>`: the name you want to give to the Kafka instance
+* `<PROJECT_NAME>`: the name of the project created during sing-up
+* `<CLOUD_PROVIDER>`: the name of the Cloud region where the instance will be created. The list of cloud regions can be found with
+```
+avn cloud list
+```
+* `<AIVEN_PLAN_NAME>`: name of Aiven's plan to use, which will drive the resources available, the list of plans can be found with
+```
+avn service plans --project <PROJECT_NAME> -t kafka --cloud <CLOUD_PROVIDER>
 ```
 
 Download the required certificates with
@@ -103,6 +116,7 @@ avn service get <KAFKA_SERVICE_NAME> \
   --project <PROJECT_NAME> \
   --format '{service_uri}'
 ```
+The Kafka Service URI provides the `hostname` and `port` needed to execute the code.
 For a more detailed description of services and required credentials, check the [blog post](blogs.aiven.io)
 
 ## No Pizza? No Problem!
