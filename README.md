@@ -10,7 +10,7 @@
 
 An Apache Kafka cluster can be created in minutes in any cloud of your choice using [Aiven.io console](https://console.aiven.io/signup?utm_source=github&utm_medium=organic&utm_campaign=blog_art&utm_content=post).
 
-For more informations about the code building blogs check the [blog post](blogs.aiven.io)
+For more informations about the code building blogs check the [blog post](https://aiven.io/blog/create-your-own-data-stream-for-kafka-with-python-and-faker?utm_source=github&utm_medium=organic&utm_campaign=blog_art&utm_content=post)
 
 
 ## Installation
@@ -35,7 +35,7 @@ python main.py --cert-folder ~/kafkaCerts/ \
   --max-waiting-time 0
 ```
 Where
-* `cert-folder`: points to the folder containing the Kafka certificates (see [blog post]() for more)
+* `cert-folder`: points to the folder containing the Kafka certificates (see [blog post](https://aiven.io/blog/create-your-own-data-stream-for-kafka-with-python-and-faker?utm_source=github&utm_medium=organic&utm_campaign=blog_art&utm_content=post) for more)
 * `host`: the Kafka host
 * `port`: the Kafka port
 * `topic-name`: the Kafka topic name to write to (the topic needs to be pre-created or `kafka.auto_create_topics_enable` parameter enabled)
