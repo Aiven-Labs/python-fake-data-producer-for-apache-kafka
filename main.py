@@ -258,6 +258,7 @@ def main():
     parser.add_argument('--nr-messages', help="Number of messages to produce (0 for unlimited)", required=True)
     parser.add_argument('--max-waiting-time', help="Max waiting time between messages (0 for none)", required=True)
     parser.add_argument('--nr-threads', help="Number of threads (1 by default)", required=True)
+    parser.add_argument('--flask-port', help="Flask Port", required=True)
     args = parser.parse_args()
     global p_cert_folder, p_hostname, p_port, p_topic_name, p_nr_threads, p_nr_messages, p_max_waiting_time
     p_cert_folder =args.cert_folder
@@ -267,8 +268,9 @@ def main():
     p_nr_threads=int(args.nr_threads)
     p_nr_messages=args.nr_messages
     p_max_waiting_time=args.max_waiting_time
+    p_flask_port=int(args.flask_port)
     #health_check()
-    app.run(host='0.0.0.0',debug=True)
+    app.run(host='0.0.0.0',port=p_flask_port, debug=True)
 
 
 
