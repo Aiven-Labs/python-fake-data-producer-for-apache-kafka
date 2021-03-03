@@ -7,18 +7,31 @@ import argparse
 from pizzaproducer import PizzaProvider
 import threading
 import numpy as np, numpy.random
-from multiprocessing import Process, Queue
+from multiprocessing import Process, Value
+#from asyncio import LifoQueue
 from flask import Flask
 
-app = Flask(__name__)
-flask_app = Flask(__name__)
-task_started = False
-q = False
-p = False
+
+
+
 
 MAX_NUMBER_PIZZAS_IN_ORDER = 5
 MAX_ADDITIONAL_TOPPINGS_IN_PIZZA = 5
 
+app = Flask(__name__)
+flask_app = Flask(__name__)
+task_started = False
+#q = LifoQueue(maxsize=0)
+val = Value('d',0)
+p = False
+nr_msg_sent = 0
+p_cert_folder=""
+p_hostname=""
+p_port=""
+p_topic_name=""
+p_nr_threads=1
+p_nr_messages=-1
+p_max_waiting_time=0
 
 
 key_schema = {
@@ -193,7 +206,8 @@ def produce_msgs(
         topic_name='pizza-orders',
         nr_messages=-1,
         max_waiting_time_in_sec=5,
-        thread_nr = 1):
+        thread_nr = 1,
+        val = ""):
 
     producer = KafkaProducer(
         bootstrap_servers=hostname+":"+port,
@@ -207,6 +221,7 @@ def produce_msgs(
     if nr_messages <= 0:
         nr_messages = float('inf')
     i = 0
+    global nr_msg_sent
     while i < nr_messages:
         message, key = produce_pizza_order(i)
 
@@ -221,20 +236,13 @@ def produce_msgs(
         #sleep_time = random.randint(0, max_waiting_time_in_sec * 10)/10
         #print("Sleeping for..."+str(sleep_time)+'s')
         #time.sleep(sleep_time)
-
+        #q.put(i,False)
+        val.value=int(i)
         # Force flushing of all messages
         if (i % 1000) == 0:
             producer.flush()
         i = i + 1
     producer.flush()
-
-def start_background_process():
-    print("Starting background task")
-    queue = Queue(maxsize=1)
-    process = Process(target=f, args=(q,))
-    process.start()
-    return queue, process
-
 
 
 # calling the main produce_msgs function: parameters are:
@@ -251,43 +259,47 @@ def main():
     parser.add_argument('--max-waiting-time', help="Max waiting time between messages (0 for none)", required=True)
     parser.add_argument('--nr-threads', help="Number of threads (1 by default)", required=True)
     args = parser.parse_args()
+    global p_cert_folder, p_hostname, p_port, p_topic_name, p_nr_threads, p_nr_messages, p_max_waiting_time
     p_cert_folder =args.cert_folder
     p_hostname =args.host
     p_port =args.port
     p_topic_name=args.topic_name
     p_nr_threads=int(args.nr_threads)
-    print()
+    p_nr_messages=args.nr_messages
+    p_max_waiting_time=args.max_waiting_time
+    #health_check()
+    app.run(debug=True)
 
-    if p_nr_threads < 1:
-        p_nr_threads = 1
-    print(p_nr_threads)
-    threads = []
-    if p_nr_threads > 1:
-        for i in range(0, p_nr_threads):
-            t = threading.Thread(target=produce_msgs, args=(
-                                                p_cert_folder,
-                                                p_hostname,
-                                                p_port,
-                                                p_topic_name,
-                                                int(int(args.nr_messages)/p_nr_threads),
-                                                int(args.max_waiting_time),
-                                                i
-                                            )
-                                          )
-            threads.append(t)
-            threads[i].start()
-    else:
-        produce_msgs(p_cert_folder,
-                     p_hostname,
-                     p_port,
-                     p_topic_name,
-                     int(int(args.nr_messages)/p_nr_threads),
-                     int(args.max_waiting_time),
-                     1)
 
-    for i in range(0, p_nr_threads):
-        threads[i].join()
-    #print(threading.activeCount())
+
+def start_background_process():
+    val = Value('d',0)
+
+    process = Process(target=produce_msgs, args=(
+                                        p_cert_folder,
+                                        p_hostname,
+                                        p_port,
+                                        p_topic_name,
+                                        int(int(p_nr_messages)/p_nr_threads),
+                                        int(p_max_waiting_time),
+                                        1,
+                                        val
+                                    )
+                                  )
+    process.start()
+    return val, process
+
+
+
+@app.route('/')
+def health_check():
+    global val, p, task_started, nr_msg_sent
+    print(task_started)
+    if not task_started:
+        val, p = start_background_process()
+        task_started = True
+    pizzas_ordered = int(val.value)
+    return 'Pizzas ordered: {}'.format(pizzas_ordered)
 
 
 if __name__ == "__main__":
