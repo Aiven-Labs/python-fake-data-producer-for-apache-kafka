@@ -301,7 +301,7 @@ def health_check():
         val, p = start_background_process()
         task_started = True
     pizzas_ordered = int(val.value)
-    return '<img src="https://ftisiot.net/images/2021/pizza-chef.png"><br> Pizzas ordered: <b>{}</b>'.format(pizzas_ordered)
+    return '<table><tr><td><img src="https://ftisiot.net/images/2021/pizza-chef.png"></td><td><font size=20> Pizzas ordered: <b>{}</b></td></tr></table>'.format(pizzas_ordered)
 
 
 if __name__ == "__main__":
