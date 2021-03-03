@@ -268,7 +268,7 @@ def main():
     p_nr_messages=args.nr_messages
     p_max_waiting_time=args.max_waiting_time
     #health_check()
-    app.run(debug=True)
+    app.run(host='0.0.0.0',debug=True)
 
 
 
