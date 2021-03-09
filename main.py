@@ -264,7 +264,7 @@ def main():
     p_hostname =args.host
     p_port =args.port
     p_topic_name=args.topic_name
-    p_nr_threads=int(args.nr_threads)
+    #p_nr_threads=int(args.nr_threads)
     p_nr_messages=args.nr_messages
     p_max_waiting_time=args.max_waiting_time
     p_flask_port=int(args.flask_port)
