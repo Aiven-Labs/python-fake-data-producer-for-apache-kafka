@@ -167,7 +167,7 @@ def produce_pizza_order (ordercount = 1):
         #milan_distribution = random.random() /100 +0.2
         cities_distribution = cities_distribution * (1-milan_distribution)
         cities_distribution = np.insert(cities_distribution,0,milan_distribution)
-        print(milan_distribution)
+        #print(milan_distribution)
     city_lat_long = fake.pizza_location(cities_distribution, lat_mu, lat_sigma, long_mu, long_sigma)
     # message composition
     msg_payload = {
@@ -225,7 +225,7 @@ def produce_msgs(
     while i < nr_messages:
         message, key = produce_pizza_order(i)
 
-        print("Sending: {}".format(message))
+        #print("Sending: {}".format(message))
         if (i % 10000) == 0:
             print(str(thread_nr) +":"+str(i))
         # sending the message to Kafka
@@ -235,7 +235,7 @@ def produce_msgs(
         # Sleeping time
         #sleep_time = random.randint(0, max_waiting_time_in_sec * 10)/10
         #print("Sleeping for..."+str(sleep_time)+'s')
-        #time.sleep(sleep_time)
+        time.sleep(sleep_time)
         #q.put(i,False)
         val.value=int(i)
         # Force flushing of all messages
