@@ -225,7 +225,7 @@ def produce_msgs(
     while i < nr_messages:
         message, key = produce_pizza_order(i)
 
-        #print("Sending: {}".format(message))
+        print("Sending: {}".format(message))
         if (i % 10000) == 0:
             print(str(thread_nr) +":"+str(i))
         # sending the message to Kafka
@@ -257,7 +257,6 @@ def main():
     parser.add_argument('--topic-name', help="Topic Name", required=True)
     parser.add_argument('--nr-messages', help="Number of messages to produce (0 for unlimited)", required=True)
     parser.add_argument('--max-waiting-time', help="Max waiting time between messages (0 for none)", required=True)
-    parser.add_argument('--nr-threads', help="Number of threads (1 by default)", required=True)
     parser.add_argument('--flask-port', help="Flask Port", required=True)
     args = parser.parse_args()
     global p_cert_folder, p_hostname, p_port, p_topic_name, p_nr_threads, p_nr_messages, p_max_waiting_time
@@ -301,7 +300,7 @@ def health_check():
         val, p = start_background_process()
         task_started = True
     pizzas_ordered = int(val.value)
-    return '<table><tr><td><img src="https://ftisiot.net/images/2021/pizza-chef.png"></td><td><font size=20> Pizzas ordered: <b>{}</b></td></tr></table>'.format(pizzas_ordered)
+    return '<table><tr><td><img src="https://ftisiot.net/images/2021/pizza-chef.png"></td><td><font size=20> ALFA<br>Pizzas ordered: <b>{:,}</b></td></tr></table>'.format(pizzas_ordered)
 
 
 if __name__ == "__main__":
