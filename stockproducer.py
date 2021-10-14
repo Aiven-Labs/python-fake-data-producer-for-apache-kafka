@@ -38,7 +38,7 @@ class StockProvider(BaseProvider):
         message = {
             'stock_name': stockname,
             'stock_value': self.stock_value(stockname),
-            'time_value': int(ts*1000)
+            'timestamp': int(ts*1000)
         }
         key = {'user': 'all_users'}
         return message, key
