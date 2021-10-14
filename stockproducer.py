@@ -4,10 +4,10 @@ import time
 import datetime
 
 StockNames = ['Deja Brew', 'Jurassic Pork', 'Lawn & Order', 'Pita Pan', 'Bread Pitt', 'Indiana Jeans', 'Thai Tanic']
-StockCurrentValues = [10.0, 20.1, 30.2, 12.1, 15.1, 15.1, 27.5]
+StockCurrentValues = [10.0, 20.1, 20.2, 12.1, 25.1, 25.1, 27.5]
 StockUpProb = [0.5, 0.6, 0.7, 0.8, 0.9, 0.4, 0.3]
 ShuffleProb = 0.2
-ChangeAmount = 0.1
+ChangeAmount = 0.2
 
 class StockProvider(BaseProvider):
 
