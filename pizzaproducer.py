@@ -15,7 +15,7 @@ class PizzaProvider(BaseProvider):
             'Salami',
             'Peperoni'
         ]
-        return valid_pizza_names[random.randint(0, len(valid_pizza_names)-1)]
+        return random.choice(valid_pizza_names)
 
     def pizza_topping(self):
         available_pizza_toppings = [
@@ -36,7 +36,7 @@ class PizzaProvider(BaseProvider):
             'strawberry',
             'banana'
         ]
-        return available_pizza_toppings[random.randint(0, len(available_pizza_toppings)-1)]
+        return random.choice(available_pizza_toppings)
 
     def pizza_shop(self):
         pizza_shops = [
@@ -47,4 +47,29 @@ class PizzaProvider(BaseProvider):
             'Mammamia Pizza',
             'Its-a me! Mario Pizza!'
         ]
-        return pizza_shops[random.randint(0, len(pizza_shops)-1)]
+        return random.choice(pizza_shops)
+    
+    def produce_msg (self, FakerInstance, ordercount = 1, max_pizzas_in_order = 5, max_toppings_in_pizza=3):
+        shop = FakerInstance.pizza_shop()
+        # Each Order can have 1-10 pizzas in it
+        pizzas = []
+        for pizza in range(random.randint(1, max_pizzas_in_order)):
+            # Each Pizza can have 0-5 additional toppings on it
+            toppings = []
+            for topping in range(random.randint(0, max_toppings_in_pizza)):
+                toppings.append(FakerInstance.pizza_topping())
+            pizzas.append({
+                'pizzaName': FakerInstance.pizza_name(),
+                'additionalToppings': toppings
+            })
+        # message composition
+        message = {
+            'id': ordercount,
+            'shop': shop,
+            'name': FakerInstance.unique.name(),
+            'phoneNumber': FakerInstance.unique.phone_number(),
+            'address': FakerInstance.address(),
+            'pizzas': pizzas
+        }
+        key = {'shop': shop}
+        return message, key
