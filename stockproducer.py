@@ -22,7 +22,7 @@ class StockProvider(BaseProvider):
             goesup = -1
         nextval = currentval + random.random() * ChangeAmount * goesup
         StockCurrentValues[indexStock] = nextval
-        print(str(StockCurrentValues[indexStock]) + " " + str(nextval))
+        
         return nextval
 
     def reshuffle_probs(self, stockname):
