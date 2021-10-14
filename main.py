@@ -7,6 +7,8 @@ import argparse
 from pizzaproducer import PizzaProvider
 from userbehaviorproducer import UserBehaviorProvider
 from stockproducer import StockProvider
+from realstockproducer import RealStockProvider
+from metricproducer import MetricProvider
 
 MAX_NUMBER_PIZZAS_IN_ORDER = 10
 MAX_ADDITIONAL_TOPPINGS_IN_PIZZA = 5
@@ -42,16 +44,17 @@ def produce_msgs(cert_folder = '~/kafka-pizza/',
     
     if subject == 'stock':
         fake.add_provider(StockProvider)
-        # Adding the newly created PizzaProvider to the Faker instance
+    elif subject == 'realstock':
+        fake.add_provider(RealStockProvider)
+    elif subject == 'metric':
+        fake.add_provider(MetricProvider)
     elif subject == 'userbehaviour':
         fake.add_provider(UserBehaviorProvider)
     else:
         fake.add_provider(PizzaProvider)
     
     while i < nr_messages:
-        if subject == 'stock':
-            message, key = fake.produce_msg()
-        elif subject == 'userbehaviour':
+        if subject in ['stock', 'userbehaviour', 'realstock', 'metric']:
             message, key = fake.produce_msg()
         else:
             message, key = fake.produce_msg(fake, i, MAX_NUMBER_PIZZAS_IN_ORDER, MAX_ADDITIONAL_TOPPINGS_IN_PIZZA)
@@ -84,7 +87,7 @@ def main():
     parser.add_argument('--topic-name', help='Topic Name', required=True)
     parser.add_argument('--nr-messages', help='Number of messages to produce (0 for unlimited)', required=True)
     parser.add_argument('--max-waiting-time', help='Max waiting time between messages (0 for none)', required=True)
-    parser.add_argument('--subject', help='What type of content to produce (possible choices are [pizza, userbehaviour, stock] pizza is the default', required=False)
+    parser.add_argument('--subject', help='What type of content to produce (possible choices are [pizza, userbehaviour, stock, realstock, metric] pizza is the default', required=False)
     args = parser.parse_args()
     p_cert_folder =args.cert_folder
     p_hostname =args.host
