@@ -18,8 +18,7 @@ This demo app is relying on [Faker](Python 3.5 and above) and [kafka-python](htt
 The installation can be done via
 
 ```bash
-pip install faker
-pip install kafka-python
+pip install -r requirements.txt
 ```
 
 ## Usage
