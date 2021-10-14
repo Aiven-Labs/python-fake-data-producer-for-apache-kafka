@@ -41,6 +41,7 @@ Where
 * `topic-name`: the Kafka topic name to write to (the topic needs to be pre-created or `kafka.auto_create_topics_enable` parameter enabled)
 * `nr-messages`: the number of messages to send
 * `max-waiting-time`: the maximum waiting time in seconds between messages
+* `subject`: select amongst various subjects: **pizza** is the default one, but you can generate also `userbehaviour`, `stocks`, `realstocks` (using the yahoo finance apis) and `metrics`.
 
 If successfully connected to a Kafka cluster, the command will output a number of messages (`nr-messages` parameter) that are been sent to Kafka in the form
 
@@ -162,5 +163,48 @@ def produce_pizza_order (ordercount = 1):
 ```
 
 To customise your dataset, you can check Faker's providers in the [related doc](https://faker.readthedocs.io/en/master/providers.html)
+
+**Edit**:
+Now with the ``subject`` parameter you can start generating:
+
+* fake `metric` data
+
+```
+{'hostname': 'grumpy', 'cpu': 'cpu4', 'usage': 85.2992318980445, 'occurred_at': 1634221377266}
+{'hostname': 'sleepy', 'cpu': 'cpu1', 'usage': 97.83137121091504, 'occurred_at': 1634221378192}
+{'hostname': 'sneezy', 'cpu': 'cpu3', 'usage': 85.36598989372837, 'occurred_at': 1634221378395}
+{'hostname': 'happy', 'cpu': 'cpu4', 'usage': 81.10449127622482, 'occurred_at': 1634221378800}
+{'hostname': 'dopey', 'cpu': 'cpu2', 'usage': 84.98778951073432, 'occurred_at': 1634221379306}
+```
+
+* fake `userbehaviour` data
+
+```
+{'user_id': 8, 'item_id': 25, 'behavior': 'buy', 'view_id': None, 'group_name': 'A', 'occurred_at': '2021-10-14 16:24:57'}
+{'user_id': 6, 'item_id': 28, 'behavior': 'buy', 'view_id': None, 'group_name': 'B', 'occurred_at': '2021-10-14 16:24:51'}
+{'user_id': 6, 'item_id': 23, 'behavior': 'cart', 'view_id': None, 'group_name': 'B', 'occurred_at': '2021-10-14 16:24:56'}
+{'user_id': 9, 'item_id': 26, 'behavior': 'buy', 'view_id': None, 'group_name': 'A', 'occurred_at': '2021-10-14 16:24:52'}
+{'user_id': 1, 'item_id': 23, 'behavior': 'buy', 'view_id': None, 'group_name': 'B', 'occurred_at': '2021-10-14 16:24:56'}
+```
+
+* fake `stock` data
+
+```
+{'stock_name': 'Pita Pan', 'stock_value': 11.311429500055635, 'timestamp': 1634221435718}
+{'stock_name': 'Deja Brew', 'stock_value': 9.956550461386884, 'timestamp': 1634221435877}
+{'stock_name': 'Thai Tanic', 'stock_value': 27.227119819515632, 'timestamp': 1634221436180}
+{'stock_name': 'Lawn & Order', 'stock_value': 20.625166423466904, 'timestamp': 1634221436285}
+{'stock_name': 'Indiana Jeans', 'stock_value': 24.598295127977412, 'timestamp': 1634221436491}
+```
+
+* real `realstock` data (based on yahoo finance apis)
+
+```
+{'stock_name': 'DOGE-USD', 'stock_value': 0.23705412447452545, 'timestamp': 1634221555719}
+{'stock_name': 'DOGE-USD', 'stock_value': 0.23705412447452545, 'timestamp': 1634221556098}
+{'stock_name': 'ETH-USD', 'stock_value': 3787.759521484375, 'timestamp': 1634221557011}
+{'stock_name': 'ETH-USD', 'stock_value': 3787.759521484375, 'timestamp': 1634221557493}
+{'stock_name': 'ADA-USD', 'stock_value': 2.2166504859924316, 'timestamp': 1634221557971}
+```
 
 KAFKA is a registered trademark of The Apache Software Foundation and has been licensed for use by Aiven. Aiven has no affiliation with and is not endorsed by The Apache Software Foundation.
