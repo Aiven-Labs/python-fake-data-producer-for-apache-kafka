@@ -65,7 +65,7 @@ def produce_msgs(cert_folder = '~/kafka-pizza/',
                       key=key,
                       value=message)
         # Sleeping time
-        sleep_time = random.randrange(0, max_waiting_time_in_sec * 10)/10
+        sleep_time = random.randint(0, int(max_waiting_time_in_sec * 10000))/10000
         print('Sleeping for...'+str(sleep_time)+'s')
         time.sleep(sleep_time)
 
