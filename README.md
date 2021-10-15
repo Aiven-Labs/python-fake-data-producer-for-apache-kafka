@@ -14,7 +14,7 @@ For more informations about the code building blogs check the [blog post](https:
 
 
 ## Installation
-This demo app is relying on [Faker](Python 3.5 and above) and [kafka-python](https://kafka-python.readthedocs.io/en/master/usage.html) which the former requiring Python 3.5 and above.
+This demo app is relying on [Faker](https://faker.readthedocs.io/en/master/) and [kafka-python](https://kafka-python.readthedocs.io/en/master/usage.html) which the former requiring Python 3.5 and above.
 The installation can be done via
 
 ```bash
