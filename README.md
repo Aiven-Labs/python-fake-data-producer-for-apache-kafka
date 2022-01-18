@@ -40,7 +40,7 @@ Where
 * `topic-name`: the Kafka topic name to write to (the topic needs to be pre-created or `kafka.auto_create_topics_enable` parameter enabled)
 * `nr-messages`: the number of messages to send
 * `max-waiting-time`: the maximum waiting time in seconds between messages
-* `subject`: select amongst various subjects: **pizza** is the default one, but you can generate also `userbehaviour`, `stocks`, `realstocks` (using the yahoo finance apis) and `metrics`.
+* `subject`: select amongst various subjects: **pizza** is the default one, but you can generate also `userbehaviour`, `stock`, `realstock` (using the yahoo finance apis) and `metric`.
 
 If successfully connected to a Kafka cluster, the command will output a number of messages (`nr-messages` parameter) that are been sent to Kafka in the form
 
