@@ -1,4 +1,4 @@
-# Apache Kafka Python Fake Data Producer
+# Apache Kafka® Python Fake Data Producer
 
 ## Description
 
@@ -205,5 +205,6 @@ Now with the ``subject`` parameter you can start generating:
 {'stock_name': 'ETH-USD', 'stock_value': 3787.759521484375, 'timestamp': 1634221557493}
 {'stock_name': 'ADA-USD', 'stock_value': 2.2166504859924316, 'timestamp': 1634221557971}
 ```
+## Trademark
 
-KAFKA is a registered trademark of The Apache Software Foundation and has been licensed for use by Aiven. Aiven has no affiliation with and is not endorsed by The Apache Software Foundation.
+Apache Kafka is either a registered trademark or trademark of the Apache Software Foundation in the United States and/or other countries. Aiven has no affiliation with and is not endorsed by The Apache Software Foundation.
