@@ -1,4 +1,5 @@
 import random
+import time
 from faker.providers import BaseProvider
 
 # Adding a PizzaProvider with 3 methods:
@@ -69,7 +70,8 @@ class PizzaProvider(BaseProvider):
             'name': FakerInstance.unique.name(),
             'phoneNumber': FakerInstance.unique.phone_number(),
             'address': FakerInstance.address(),
-            'pizzas': pizzas
+            'pizzas': pizzas,
+            'timestamp': int(time.time()*1000)
         }
         key = {'shop': shop}
         return message, key
