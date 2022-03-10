@@ -1,2 +1,4 @@
 **/certs
 .vscode
+*.pyc
+venv

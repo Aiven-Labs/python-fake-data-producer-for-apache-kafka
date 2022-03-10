@@ -9,6 +9,8 @@ from userbehaviorproducer import UserBehaviorProvider
 from stockproducer import StockProvider
 from realstockproducer import RealStockProvider
 from metricproducer import MetricProvider
+from userbets import UserBetsProvider
+
 
 MAX_NUMBER_PIZZAS_IN_ORDER = 10
 MAX_ADDITIONAL_TOPPINGS_IN_PIZZA = 5
@@ -50,11 +52,12 @@ def produce_msgs(cert_folder = '~/kafka-pizza/',
         fake.add_provider(MetricProvider)
     elif subject == 'userbehaviour':
         fake.add_provider(UserBehaviorProvider)
+    elif subject == 'bet':
+        fake.add_provider(UserBetsProvider)
     else:
         fake.add_provider(PizzaProvider)
-    
     while i < nr_messages:
-        if subject in ['stock', 'userbehaviour', 'realstock', 'metric']:
+        if subject in ['stock', 'userbehaviour', 'realstock', 'metric','bet']:
             message, key = fake.produce_msg()
         else:
             message, key = fake.produce_msg(fake, i, MAX_NUMBER_PIZZAS_IN_ORDER, MAX_ADDITIONAL_TOPPINGS_IN_PIZZA)
