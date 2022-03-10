@@ -1,4 +1,5 @@
 import random
+import time
 from faker.providers import BaseProvider
 
 MIN_AMOUNT = 2      # Min betting amount
@@ -58,7 +59,8 @@ class UserBetsProvider(BaseProvider):
                 'subcategory': bet_event['subcategory'],
                 'name': bet_event['event']
             },
-            'amount': bet_amount
+            'amount': bet_amount,
+            'timestap': int(time.time()*1000)
         }
         key = {'event': bet_event['event']}
         return message, key
