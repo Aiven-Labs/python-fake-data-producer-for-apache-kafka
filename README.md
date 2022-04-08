@@ -26,7 +26,8 @@ pip install -r requirements.txt
 The Python code can be run in bash with the following,
 in SSL security protocol:
 ```bash
-python main.py --security-protocol ssl 
+python main.py \
+  --security-protocol ssl \
   --cert-folder ~/kafkaCerts/ \
   --host kafka-<name>.aivencloud.com \
   --port 13041 \
@@ -36,7 +37,8 @@ python main.py --security-protocol ssl
 ```
 in PLAINTEXT security protocol:
 ```bash
-python main.py --security-protocol plaintext 
+python main.py \
+  --security-protocol plaintext \
   --host your-kafka-broker-host \
   --port 9092 \
   --topic-name pizza-orders \
