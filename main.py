@@ -30,15 +30,23 @@ def produce_msgs(cert_folder = '~/kafka-pizza/',
                  nr_messages = -1,
                  max_waiting_time_in_sec = 5,
                  subject = 'pizza'):
-    producer = KafkaProducer(
-        bootstrap_servers=hostname + ':' + port,
-        security_protocol='SSL',
-        ssl_cafile=cert_folder+'/ca.pem',
-        ssl_certfile=cert_folder+'/service.cert',
-        ssl_keyfile=cert_folder+'/service.key',
-        value_serializer=lambda v: json.dumps(v).encode('ascii'),
-        key_serializer=lambda v: json.dumps(v).encode('ascii')
-    )
+    if cert_folder.lower() == 'plaintext':
+        producer = KafkaProducer(
+            bootstrap_servers=hostname + ':' + port,
+            security_protocol='PLAINTEXT',
+            value_serializer=lambda v: json.dumps(v).encode('ascii'),
+            key_serializer=lambda v: json.dumps(v).encode('ascii')
+        )
+    else:
+        producer = KafkaProducer(
+            bootstrap_servers=hostname + ':' + port,
+            security_protocol='SSL',
+            ssl_cafile=cert_folder+'/ca.pem',
+            ssl_certfile=cert_folder+'/service.cert',
+            ssl_keyfile=cert_folder+'/service.key',
+            value_serializer=lambda v: json.dumps(v).encode('ascii'),
+            key_serializer=lambda v: json.dumps(v).encode('ascii')
+        )
 
     if nr_messages <= 0:
         nr_messages = float('inf')
@@ -84,7 +92,7 @@ def produce_msgs(cert_folder = '~/kafka-pizza/',
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--cert-folder', help='Path to folder containing required Kafka certificates', required=True)
+    parser.add_argument('--cert-folder', help='Path to folder containing required Kafka certificates or use plaintext to work with unsecure Kafka', required=True)
     parser.add_argument('--host', help='Kafka Host (obtained from Aiven console)', required=True)
     parser.add_argument('--port', help='Kafka Port (obtained from Aiven console)', required=True)
     parser.add_argument('--topic-name', help='Topic Name', required=True)
