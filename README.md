@@ -23,10 +23,10 @@ pip install -r requirements.txt
 
 ## Usage
 
-The Python code can be run in bash with the following
-
+The Python code can be run in bash with the following,
+in SSL security protocol:
 ```bash
-python main.py --cert-folder ~/kafkaCerts/ \
+python main.py --security-protocol ssl --cert-folder ~/kafkaCerts/ \
   --host kafka-<name>.aivencloud.com \
   --port 13041 \
   --topic-name pizza-orders \

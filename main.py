@@ -2,6 +2,7 @@ from faker import Faker
 import json
 from kafka import KafkaProducer
 import time
+import sys
 import random
 import argparse
 from pizzaproducer import PizzaProvider
@@ -38,7 +39,7 @@ def produce_msgs(security_protocol='SSL',
             value_serializer=lambda v: json.dumps(v).encode('ascii'),
             key_serializer=lambda v: json.dumps(v).encode('ascii')
         )
-    else:
+    elif security_protocol.upper() == 'SSL':
         producer = KafkaProducer(
             bootstrap_servers=hostname + ':' + port,
             security_protocol='SSL',
@@ -48,6 +49,8 @@ def produce_msgs(security_protocol='SSL',
             value_serializer=lambda v: json.dumps(v).encode('ascii'),
             key_serializer=lambda v: json.dumps(v).encode('ascii')
         )
+    else:
+        sys.exit("This security protocol is not supported!")
 
     if nr_messages <= 0:
         nr_messages = float('inf')
