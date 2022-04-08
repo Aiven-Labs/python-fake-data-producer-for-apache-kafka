@@ -23,17 +23,28 @@ pip install -r requirements.txt
 
 ## Usage
 
-The Python code can be run in bash with the following
-
+The Python code can be run in bash with the following,
+in SSL security protocol:
 ```bash
-python main.py --cert-folder ~/kafkaCerts/ \
+python main.py --security-protocol ssl 
+  --cert-folder ~/kafkaCerts/ \
   --host kafka-<name>.aivencloud.com \
   --port 13041 \
   --topic-name pizza-orders \
   --nr-messages 0 \
   --max-waiting-time 0
 ```
+in PLAINTEXT security protocol:
+```bash
+python main.py --security-protocol plaintext 
+  --host your-kafka-broker-host \
+  --port 9092 \
+  --topic-name pizza-orders \
+  --nr-messages 0 \
+  --max-waiting-time 0
+```
 Where
+* `security-protocol`: Security protocol for Kafka. PLAINTEXT or SSL are supported.
 * `cert-folder`: points to the folder containing the Apache Kafka certificates (see [blog post](https://aiven.io/blog/create-your-own-data-stream-for-kafka-with-python-and-faker?utm_source=github&utm_medium=organic&utm_campaign=blog_art&utm_content=post) for more)
 * `host`: the Apache Kafka host
 * `port`: the Apache Kafka port
