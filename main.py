@@ -55,6 +55,7 @@ def produce_msgs(security_protocol='SSL',
         producer = KafkaProducer(
             bootstrap_servers=hostname + ':' + port,
             security_protocol='SASL_SSL',
+            sasl_mechanism='PLAIN',
             sasl_plain_username=username,
             sasl_plain_password=password,
             value_serializer=lambda v: json.dumps(v).encode('ascii'),
