@@ -26,6 +26,8 @@ Faker.seed(4321)
 # function produce_msgs starts producing messages with Faker
 def produce_msgs(security_protocol='SSL',
                  cert_folder = '~/kafka-pizza/',
+                 username = '',
+                 password = '',
                  hostname = 'hostname',
                  port = '1234',
                  topic_name = 'pizza-orders',
@@ -46,6 +48,15 @@ def produce_msgs(security_protocol='SSL',
             ssl_cafile=cert_folder+'/ca.pem',
             ssl_certfile=cert_folder+'/service.cert',
             ssl_keyfile=cert_folder+'/service.key',
+            value_serializer=lambda v: json.dumps(v).encode('ascii'),
+            key_serializer=lambda v: json.dumps(v).encode('ascii')
+        )
+    elif security_protocol.upper() == 'SASL_SSL':
+        producer = KafkaProducer(
+            bootstrap_servers=hostname + ':' + port,
+            security_protocol='SASL_SSL',
+            sasl_plain_username=username,
+            sasl_plain_password=password,
             value_serializer=lambda v: json.dumps(v).encode('ascii'),
             key_serializer=lambda v: json.dumps(v).encode('ascii')
         )
@@ -98,6 +109,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--security-protocol', help='Security protocol for Kafka (PLAINTEXT, SSL)', required=True)
     parser.add_argument('--cert-folder', help='Path to folder containing required Kafka certificates. Required --security-protocol equal SSL', required=False)
+    parser.add_argument('--username', help='Username. Required if security-protocol is SASL_SSL', required=False)
+    parser.add_argument('--password', help='Password. Required if security-protocol is SASL_SSL', required=False)
     parser.add_argument('--host', help='Kafka Host (obtained from Aiven console)', required=True)
     parser.add_argument('--port', help='Kafka Port (obtained from Aiven console)', required=True)
     parser.add_argument('--topic-name', help='Topic Name', required=True)
@@ -107,12 +120,16 @@ def main():
     args = parser.parse_args()
     p_security_protocol = args.security_protocol
     p_cert_folder =args.cert_folder
+    p_username =args.username
+    p_password =args.password
     p_hostname =args.host
     p_port =args.port
     p_topic_name=args.topic_name
     p_subject=args.subject
     produce_msgs(security_protocol=p_security_protocol,
                  cert_folder=p_cert_folder,
+                 username=p_username,
+                 password=p_password,
                  hostname=p_hostname,
                  port=p_port,
                  topic_name=p_topic_name,
