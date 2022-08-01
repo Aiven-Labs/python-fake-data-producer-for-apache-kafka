@@ -20,22 +20,19 @@ class PizzaProvider(BaseProvider):
 
     def pizza_topping(self):
         available_pizza_toppings = [
-            'tomato',
-            'mozzarella',
-            'blue cheese',
-            'salami',
-            'green peppers',
-            'ham',
-            'olives',
-            'anchovies',
-            'artichokes',
-            'olives',
-            'garlic',
-            'tuna',
-            'onion',
-            'pineapple',
-            'strawberry',
-            'banana'
+            '🍅 tomato',
+            '🧀 blue cheese',
+            '🥚 egg',
+            '🫑 green peppers',
+            '🌶️ hot pepper',
+            '🥓 bacon',
+            '🫒 olives',
+            '🧄 garlic',
+            '🐟 tuna',
+            '🧅 onion',
+            '🍍 pineapple',
+            '🍓 strawberry',
+            '🍌 banana'
         ]
         return random.choice(available_pizza_toppings)
 
