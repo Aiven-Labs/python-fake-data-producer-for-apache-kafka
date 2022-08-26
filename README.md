@@ -47,7 +47,7 @@ python main.py \
 ```
 Where
 * `security-protocol`: Security protocol for Kafka. PLAINTEXT or SSL are supported.
-* `cert-folder`: points to the folder containing the Apache Kafka certificates (see [blog post](https://aiven.io/blog/create-your-own-data-stream-for-kafka-with-python-and-faker?utm_source=github&utm_medium=organic&utm_campaign=blog_art&utm_content=post) for more)
+* `cert-folder`: points to the folder containing the Apache Kafka CA certificate, Access certificate and Access key (see [blog post](https://aiven.io/blog/create-your-own-data-stream-for-kafka-with-python-and-faker?utm_source=github&utm_medium=organic&utm_campaign=blog_art&utm_content=post) for more)
 * `host`: the Apache Kafka host
 * `port`: the Apache Kafka port
 * `topic-name`: the Apache Kafka topic name to write to (the topic needs to be pre-created or `kafka.auto_create_topics_enable` parameter enabled)
