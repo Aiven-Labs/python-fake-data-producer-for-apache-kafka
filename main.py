@@ -17,7 +17,6 @@ MAX_NUMBER_PIZZAS_IN_ORDER = 10
 MAX_ADDITIONAL_TOPPINGS_IN_PIZZA = 5
 
 
-
 # Creating a Faker instance and seeding to have the same results every time we execute the script
 fake = Faker()
 Faker.seed(4321)
@@ -25,6 +24,7 @@ Faker.seed(4321)
 
 # function produce_msgs starts producing messages with Faker
 def produce_msgs(security_protocol='SSL',
+                 sasl_mechanism='SCRAM-SHA-256',
                  cert_folder = '~/kafka-pizza/',
                  username = '',
                  password = '',
@@ -55,7 +55,8 @@ def produce_msgs(security_protocol='SSL',
         producer = KafkaProducer(
             bootstrap_servers=hostname + ':' + port,
             security_protocol='SASL_SSL',
-            sasl_mechanism='PLAIN',
+            sasl_mechanism=sasl_mechanism,
+            ssl_cafile=cert_folder+'/ca.pem',
             sasl_plain_username=username,
             sasl_plain_password=password,
             value_serializer=lambda v: json.dumps(v).encode('ascii'),
@@ -108,8 +109,9 @@ def produce_msgs(security_protocol='SSL',
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--security-protocol', help='Security protocol for Kafka (PLAINTEXT, SSL)', required=True)
-    parser.add_argument('--cert-folder', help='Path to folder containing required Kafka certificates. Required --security-protocol equal SSL', required=False)
+    parser.add_argument('--security-protocol', help='Security protocol for Kafka (PLAINTEXT, SSL, SASL_SSL)', required=True)
+    parser.add_argument('--sasl-mechanism', help='SASL mechanism for Kafka (PLAIN, GSSAPI, OAUTHBEARER, SCRAM-SHA-256, SCRAM-SHA-512)', required=False)
+    parser.add_argument('--cert-folder', help='Path to folder containing required Kafka certificates. Required --security-protocol equal SSL or SASL_SSL', required=False)
     parser.add_argument('--username', help='Username. Required if security-protocol is SASL_SSL', required=False)
     parser.add_argument('--password', help='Password. Required if security-protocol is SASL_SSL', required=False)
     parser.add_argument('--host', help='Kafka Host (obtained from Aiven console)', required=True)
@@ -120,13 +122,14 @@ def main():
     parser.add_argument('--subject', help='What type of content to produce (possible choices are [pizza, userbehaviour, stock, realstock, metric] pizza is the default', required=False)
     args = parser.parse_args()
     p_security_protocol = args.security_protocol
-    p_cert_folder =args.cert_folder
-    p_username =args.username
-    p_password =args.password
-    p_hostname =args.host
-    p_port =args.port
-    p_topic_name=args.topic_name
-    p_subject=args.subject
+    p_cert_folder = args.cert_folder
+    p_username = args.username
+    p_password = args.password
+    p_sasl_mechanism = args.sasl_mechanism
+    p_hostname = args.host
+    p_port = args.port
+    p_topic_name= args.topic_name
+    p_subject = args.subject
     produce_msgs(security_protocol=p_security_protocol,
                  cert_folder=p_cert_folder,
                  username=p_username,
@@ -136,7 +139,8 @@ def main():
                  topic_name=p_topic_name,
                  nr_messages=int(args.nr_messages),
                  max_waiting_time_in_sec=float(args.max_waiting_time),
-                 subject=p_subject
+                 subject=p_subject,
+                 sasl_mechanism=p_sasl_mechanism,
                  )
     print(args.nr_messages)
 
