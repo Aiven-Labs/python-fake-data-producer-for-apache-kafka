@@ -33,7 +33,8 @@ python main.py \
   --port 13041 \
   --topic-name pizza-orders \
   --nr-messages 0 \
-  --max-waiting-time 0
+  --max-waiting-time 0 \
+  --subject pizza
 ```
 in ``SASL_SSL`` security protocol:
 ```bash
@@ -47,7 +48,8 @@ python main.py \
   --port 13041 \
   --topic-name pizza-orders \
   --nr-messages 0 \
-  --max-waiting-time 0
+  --max-waiting-time 0 \
+  --subject pizza
 ```
 in ``PLAINTEXT`` security protocol:
 ```bash
@@ -57,7 +59,8 @@ python main.py \
   --port 9092 \
   --topic-name pizza-orders \
   --nr-messages 0 \
-  --max-waiting-time 0
+  --max-waiting-time 0 \
+  --subject pizza
 ```
 Where
 * `security-protocol`: Security protocol for Kafka. ``PLAINTEXT``,  ``SSL`` or ``SASL_SSL`` are supported.
@@ -67,7 +70,7 @@ Where
 * `topic-name`: the Apache Kafka topic name to write to (the topic needs to be pre-created or `kafka.auto_create_topics_enable` parameter enabled)
 * `nr-messages`: the number of messages to send
 * `max-waiting-time`: the maximum waiting time in seconds between messages
-* `subject`: select amongst various subjects: `pizza` is the default one, but you can generate also `userbehaviour`, `bet`, `stock`, `realstock` (using the yahoo finance apis) and `metric`.
+* `subject`: select amongst various subjects: `pizza` is the default one, but you can generate also `userbehaviour`, `bet`, `stock`, `realstock` (using the yahoo finance apis), `metric`, and `rolling`.
 
 If successfully connected to a Apache Kafka cluster, the command will output a number of messages (`nr-messages` parameter) that are been sent to Apache Kafka in the form
 
