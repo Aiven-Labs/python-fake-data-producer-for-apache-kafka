@@ -2,11 +2,13 @@ import random
 import time
 from faker.providers import BaseProvider
 import json
+import os
+import sys
 
 
 nr_item = 0
 base_timestamp = int(time.time()*1000)
-f = open('data_rolling.json')
+f = open(os.path.join(sys.path[0],'data_rolling.json'))
 data = json.load(f)
 
 # Adding a RollingProvider with 1 method:
