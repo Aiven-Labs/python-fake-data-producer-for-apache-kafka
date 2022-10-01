@@ -11,6 +11,7 @@ from stockproducer import StockProvider
 from realstockproducer import RealStockProvider
 from metricproducer import MetricProvider
 from userbets import UserBetsProvider
+from rolling import RollingProvider
 
 
 MAX_NUMBER_PIZZAS_IN_ORDER = 10
@@ -79,10 +80,12 @@ def produce_msgs(security_protocol='SSL',
         fake.add_provider(UserBehaviorProvider)
     elif subject == 'bet':
         fake.add_provider(UserBetsProvider)
+    elif subject == 'rolling':
+        fake.add_provider(RollingProvider)
     else:
         fake.add_provider(PizzaProvider)
     while i < nr_messages:
-        if subject in ['stock', 'userbehaviour', 'realstock', 'metric','bet']:
+        if subject in ['stock', 'userbehaviour', 'realstock', 'metric', 'bet', 'rolling']:
             message, key = fake.produce_msg()
         else:
             message, key = fake.produce_msg(fake, i, MAX_NUMBER_PIZZAS_IN_ORDER, MAX_ADDITIONAL_TOPPINGS_IN_PIZZA)
