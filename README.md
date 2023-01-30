@@ -70,7 +70,7 @@ Where
 * `topic-name`: the Apache Kafka topic name to write to (the topic needs to be pre-created or `kafka.auto_create_topics_enable` parameter enabled)
 * `nr-messages`: the number of messages to send
 * `max-waiting-time`: the maximum waiting time in seconds between messages
-* `subject`: select amongst various subjects: `pizza` is the default one, but you can generate also `userbehaviour`, `bet`, `stock`, `realstock` (using the yahoo finance apis), `metric`, and `rolling`.
+* `subject`: select amongst various subjects: `pizza` is the default one, but you can generate also `userbehaviour`, `bet`, `stock`, `realstock` (using the yahoo finance apis), `metric`, `advancedmetric`, and `rolling`.
 
 If successfully connected to a Apache Kafka cluster, the command will output a number of messages (`nr-messages` parameter) that are been sent to Apache Kafka in the form
 
@@ -195,6 +195,15 @@ To customise your dataset, you can check Faker's providers in the [related doc](
 
 **Edit**:
 Now with the ``subject`` parameter you can start generating:
+
+* fake `advancedmetric` data, for `100000` different hostname each having `30` different CPUs
+
+```
+Sending: {'hostname': 'hostname30692', 'cpu': 'cpu9', 'usage': 76.83123942281046, 'occurred_at': 1675064924126}
+Sending: {'hostname': 'hostname49005', 'cpu': 'cpu4', 'usage': 76.29121084860914, 'occurred_at': 1675064924126}
+Sending: {'hostname': 'hostname65485', 'cpu': 'cpu23', 'usage': 98.6179112244911, 'occurred_at': 1675064924126}
+Sending: {'hostname': 'hostname58818', 'cpu': 'cpu15', 'usage': 87.8367169647086, 'occurred_at': 1675064924126}
+```
 
 * fake `metric` data
 

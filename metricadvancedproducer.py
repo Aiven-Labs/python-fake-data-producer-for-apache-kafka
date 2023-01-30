@@ -8,11 +8,11 @@ NUMBER_CPU = 30
 
 class MetricAdvancedProvider(BaseProvider):
     def hostname(self):
-        return "hostname" + random.randint(0, NUMBER_HOSTS)
+        return "hostname" + str(random.randint(0, NUMBER_HOSTS))
 
     def cpu_id(self):
 
-        return "cpu" + random.randint(0, NUMBER_CPU)
+        return "cpu" + str(random.randint(0, NUMBER_CPU))
 
     def usage(self):
         return random.random() * 30 + 70
