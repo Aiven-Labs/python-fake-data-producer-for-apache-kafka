@@ -135,17 +135,20 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--security-protocol",
-        help="Security protocol for Kafka (PLAINTEXT, SSL, SASL_SSL)",
+        help="""Security protocol for Kafka
+                (PLAINTEXT, SSL, SASL_SSL)""",
         required=True,
     )
     parser.add_argument(
         "--sasl-mechanism",
-        help="SASL mechanism for Kafka (PLAIN, GSSAPI, OAUTHBEARER, SCRAM-SHA-256, SCRAM-SHA-512)",
+        help="""SASL mechanism for Kafka
+                (PLAIN, GSSAPI, OAUTHBEARER, SCRAM-SHA-256, SCRAM-SHA-512)""",
         required=False,
     )
     parser.add_argument(
         "--cert-folder",
-        help="Path to folder containing required Kafka certificates. Required --security-protocol equal SSL or SASL_SSL",
+        help="""Path to folder containing required Kafka certificates.
+                Required --security-protocol equal SSL or SASL_SSL""",
         required=False,
     )
     parser.add_argument(
@@ -181,7 +184,10 @@ def main():
     )
     parser.add_argument(
         "--subject",
-        help="What type of content to produce (possible choices are [pizza, userbehaviour, stock, realstock, metric, advancedmetric] pizza is the default",
+        help="""What type of content to produce (possible choices areL
+                [pizza, userbehaviour, stock,
+                realstock, metric, advancedmetric]
+                pizza is the default""",
         required=False,
     )
     args = parser.parse_args()
