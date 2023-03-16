@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
     name='fake_data_producer_for_apache_kafka',  # How you named your package folder (MyLib)
     packages=['fake_data_producer_for_apache_kafka'],  # Chose the same as "name"
-    version='0.1',  # Start with a small number and increase it with every change you make
+    version='1.0.0',  # Start with a small number and increase it with every change you make
     license='apache-2.0',  # Chose a license from here: https://help.github.com/articles/licensing-a-repository
     description='The Python fake data producer for Apache Kafka® is a complete demo app allowing you to quickly '
                 'produce JSON fake streaming datasets and push it to an Apache Kafka topic. ',  # Give a short
