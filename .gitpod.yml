@@ -1,0 +1,7 @@
+tasks:
+  - init: pip install -r requirements.txt
+    name: install requierements
+  - name: Install avn CLI
+    init: pip install aiven-client
+  - name: Open Readme
+    command: gp preview https://aiven.io/developer/create-your-own-data-stream-for-kafka-with-python-and-faker
