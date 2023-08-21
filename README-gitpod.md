@@ -7,9 +7,9 @@ This workspace comes with some pre-installed stuff for you :
 
 First make sure to have an Aiven account, otherwise you are just a few clicks away of creating one [here](https://console.aiven.io/signup?utm_source=github&utm_medium=organic&utm_campaign=blog_art&utm_content=post)
 
-Then make sure to get an personnal access token, check this [video](https://www.youtube.com/watch?v=64G2QIMYOL4) to learn how to get one. 
+Then make sure to get an personal access token, check this [video](https://www.youtube.com/watch?v=64G2QIMYOL4) to learn how to get one. 
 
-Open a terminal so you can type each of the bash commands that will follow.
+Open a terminal, you'll need to copy-paste or re-type all the bash commands below.
 
 Now you can login : 
 
@@ -32,7 +32,7 @@ AIVEN_PLAN_NAME=startup-2
 DESTINATION_FOLDER_NAME=certs
 ```
 
-If you haven't yet, create a kafka service : 
+If you haven't yet, create a Aiven for Apache Kafka service : 
 
 ```bash
 avn service create $KAFKA_INSTANCE_NAME     \
