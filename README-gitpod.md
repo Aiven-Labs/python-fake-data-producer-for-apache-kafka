@@ -4,6 +4,7 @@ This workspace comes with some pre-installed stuff for you :
 
 * Python requirements have already been installed
 * avn CLI has already been installed
+* jq has benn installed
 
 First make sure to have an Aiven account, otherwise you are just a few clicks away of creating one [here](https://console.aiven.io/signup?utm_source=github&utm_medium=organic&utm_campaign=blog_art&utm_content=post)
 
@@ -48,14 +49,10 @@ Retrieve your host and port from the console and set them :
 And retrieve the Apache Kafka Service URI with
 
 ```bash
-avn service get $KAFKA_INSTANCE_NAME --format '{service_uri}'
-```
 
-The Apache Kafka Service URI is in the form `hostname:port` and provides the `hostname` and `port`, extract them as variables : 
+KAFKA_HOST=$(avn service get $KAFKA_INSTANCE_NAME --json | jq -r '.service_uri_params.host')
+KAFKA_PORT=$(avn service get $KAFKA_INSTANCE_NAME --json | jq -r '.service_uri_params.port')
 
-```bash
-KAFKA_HOST=hostname
-KAFKA_PORT=port
 ```
 
 You can wait for the newly created Apache Kafka instance to be ready with : 
@@ -87,3 +84,5 @@ python main.py \
   --subject pizza
 
 ```
+
+You should see a continuous flow of data being pushed to Apache Kafka, to the topic defined by the `--topic-name` parameter. You can either use the Aiven console, or tools like [kcat](https://docs.aiven.io/docs/products/kafka/howto/kcat) to browse the data.
