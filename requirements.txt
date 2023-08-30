@@ -1,3 +1,0 @@
-yahoo_fin
-faker
-kafka-python
